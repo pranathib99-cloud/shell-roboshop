@@ -13,7 +13,7 @@ do
     #get private or public ip based on frentend{public} or backend{private}
 if [ "$instance" != "frontend" ]; then
     IP=$(aws ec2 describe-instances --instance-ids $INSTANCE_ID --query 'Reservations[0].Instances[0].PrivateIpAddress' --output text)
-    RECORD_NAME="$INSTANCE.$DOMAIN_NAME"                     #mangodb.zyna.space,frontend.zyna.space
+    RECORD_NAME="$instance.$DOMAIN_NAME"                     #mangodb.zyna.space,frontend.zyna.space
 else
     IP=$(aws ec2 describe-instances --instance-ids $INSTANCE_ID --query 'Reservations[0].Instances[0].PublicIpAddress' --output text)
     RECORD_NAME= "$DOMAIN_NAME"             #zyna.space
