@@ -16,16 +16,17 @@ if [ "$instance" != "frontend" ]; then
     RECORD_NAME="$INSTANCE.DOMAIN_NAME"                     #mangodb.zyna.space,frontend.zyna.space
 else
     IP=$(aws ec2 describe-instances --instance-ids $INSTANCE_ID --query 'Reservations[0].Instances[0].PublicIpAddress' --output text)
-    RECORD_NAME="$DOMAIN_NAME"  #zyna.space
+    RECORD_NAME="$DOMAIN_NAME"             #zyna.space
 fi
     echo "$instance  $IP"
-     aws route53 change-resource-record-sets \
+
+    aws route53 change-resource-record-sets \
     --hosted-zone-id $ZONE_ID \
-    --change-batch " 
+    --change-batch '
     {
         "Comment": "Updating record set"
         ,"Changes": [{
-        "Action"              : "UPSERT"          #UPSERT will create or update
+        "Action"              : "UPSERT"         
         ,"ResourceRecordSet"  : {
             "Name"              : "'$RECORD_NAME'"
             ,"Type"             : "A"
@@ -36,6 +37,6 @@ fi
         }
         }]
     }
-    "
+    '
 done
  
