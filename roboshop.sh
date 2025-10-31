@@ -16,7 +16,7 @@ if [ "$instance" != "frontend" ]; then
     RECORD_NAME="$instance.$DOMAIN_NAME"                     #mangodb.zyna.space,frontend.zyna.space
 else
     IP=$(aws ec2 describe-instances --instance-ids $INSTANCE_ID --query 'Reservations[0].Instances[0].PublicIpAddress' --output text)
-    RECORD_NAME= "$DOMAIN_NAME"             #zyna.space
+    RECORD_NAME= "$DOMAIN_NAME"             #zyna.space only for frontend
 fi
     echo "$instance  $IP"
 
@@ -39,4 +39,5 @@ fi
     }
     '
 done
+
  
