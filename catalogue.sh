@@ -38,9 +38,6 @@ VALIDATE $? "enable nodejs 20"
 dnf install nodejs -y  &>>$LOGS_FILE
 VALIDATE $? "installing nodejs "
 
-useradd --system --home /app --shell /sbin/nologin --comment "roboshop system user" roboshop
-VALIDATE $? "adding roboshop user"
-
 if [ -d "$DIRECTORY_NAME" ]; then
   echo "Directory '$DIRECTORY_NAME' exists. Removing and recreating..."
   rm -rf "$DIRECTORY_NAME"
