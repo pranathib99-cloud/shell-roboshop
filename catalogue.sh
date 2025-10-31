@@ -8,6 +8,7 @@ LOGS_FLODER="/var/log/shell-roboshop"
 SCRIPT_NAME=$( echo $0 | cut -d "." -f1)
 MONGODB_HOST=mongodb.zyna.space
 LOGS_FILE="$LOGS_FLODER/$SCRIPT_NAME.log"
+DIRECTORY_NAME="/app"
 
 mkdir -p "$LOGS_FLODER"
 echo "script started at : $(date)"  | tee -a $LOGS_FILE
@@ -35,7 +36,15 @@ VALIDATE $? "enable nodejs 20"
 dnf install nodejs -y  &>>$LOGS_FILE
 VALIDATE $? "installing nodejs "
 
-mkdir /app
+$DIRECTORY_NAME="/app"
+
+if [ -d "$DIRECTORY_NAME" ]; then
+  echo "Directory '$DIRECTORY_NAME' exists. Removing and recreating..."
+  rm -rf "$DIRECTORY_NAME"
+fi
+
+mkdir "$DIRECTORY_NAME"
+echo "Directory '$DIRECTORY_NAME' created."
 VALIDATE $? "CREATE /app directory"  &>>$LOGS_FILE
 
 curl -o /tmp/catalogue.zip https://roboshop-artifacts.s3.amazonaws.com/catalogue-v3.zip &>>$LOGS_FILE
