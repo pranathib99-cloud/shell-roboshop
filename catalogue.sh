@@ -59,6 +59,7 @@ VALIDATE $? "unzip catalogue component"
 npm install  &>>$LOGS_FILE
 VALIDATE $? "install nodejs dependencies" 
 
+cd /path/to/catalogue
 cp catalogue.service /etc/systemd/system/catalogue.service 
 VALIDATE $? "copying catalogue service file"
 
