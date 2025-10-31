@@ -36,8 +36,6 @@ VALIDATE $? "enable nodejs 20"
 dnf install nodejs -y  &>>$LOGS_FILE
 VALIDATE $? "installing nodejs "
 
-$DIRECTORY_NAME="/app"
-
 if [ -d "$DIRECTORY_NAME" ]; then
   echo "Directory '$DIRECTORY_NAME' exists. Removing and recreating..."
   rm -rf "$DIRECTORY_NAME"
@@ -59,8 +57,8 @@ VALIDATE $? "extracting catalogue component"
 npm install  &>>$LOGS_FILE
 VALIDATE $? "installing nodejs dependencies" 
 
-cp/catalogue.service etc/systemd/system/catalogue.service &>>$LOGS_FILE
-VALIDATE $? "copying catalogue service file"
+cp $SCRIPT_DIR/catalogue.service /etc/systemd/system/catalogue.service
+VALIDATE $? "Copy systemctl service"
 
 systemctl daemon-reload &>>$LOGS_FILE
 VALIDATE $? "daemon reload"
