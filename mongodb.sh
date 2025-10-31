@@ -40,5 +40,7 @@ VALIDATE $? "Starting MONGODB"
 sed -i 's/127.0.0.1/0.0.0/g' /etc/mongod.conf  &>>$LOGS_FILE #allow remote conection to MONGODB LISTEN ADDRESS
 VALIDATE $? "allowing remote conection to MONGODB LISTEN ADDRESS"
 
-systemctl restart mongodb 
+systemctl restart mongod 
 VALIDATE $? "restaring mongodb service"
+
+
