@@ -57,12 +57,12 @@ cd /app
 VALIDATE $? "change directory to /app" &>>$LOGS_FILE 
 
 unzip /tmp/catalogue.zip &>>$LOGS_FILE
-VALIDATE $? "extracting catalogue component"
+VALIDATE $? "unzip catalogue component"
 
 npm install  &>>$LOGS_FILE
-VALIDATE $? "installing nodejs dependencies" 
+VALIDATE $? "install nodejs dependencies" 
 
-cp catalogue.service /etc/systemd/system/catalogue.service &>>$LOGS_FILE
+cp catalogue.service /etc/systemd/system/catalogue.service 
 VALIDATE $? "copying catalogue service file"
 
 systemctl daemon-reload &>>$LOGS_FILE
@@ -71,7 +71,7 @@ VALIDATE $? "daemon reload"
 systemctl enable catalogue &>>$LOGS_FILE
 VALIDATE $? "enable catalogue service"
 
-cp/mongo.repo /etc/yum.repos.d/mongo.repo &>>$LOGS_FILE
+cp mongo.repo /etc/yum.repos.d/mongo.repo &>>$LOGS_FILE
 VALIDATE $? "COPY mongo repo"
 
 dnf install mongodb-mongosh -y &>>$LOGS_FILE
