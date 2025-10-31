@@ -4,7 +4,6 @@ R="\e[31m"  #Red
 G="\e[32m" #Green
 Y="\e[33m"] #Yellow
 N="\e[0m"  #No Color white
-
 LOGS_FLODER="/var/log/shell-roboshop"
 SCRIPT_NAME=$( echo $0 | cut -d "." -f1)
 LOGS_FILE="$LOGS_FLODER/$SCRIPT_NAME.log"
@@ -38,5 +37,8 @@ VALIDATE $? "Enabling MONGODB"
 systemctl start mongod  &>>$LOGS_FILE
 VALIDATE $? "Starting MONGODB"
 
+sed -i 's/127.0.0.1/0.0.0/g' /etc/mongod.conf  &>>$LOGS_FILE #allow remote conection to MONGODB LISTEN ADDRESS
+VALIDATE $? "allowing remote conection to MONGODB LISTEN ADDRESS"
 
-
+systemctl restart mongodb 
+VALIDATE $? "restaring mongodb service"
