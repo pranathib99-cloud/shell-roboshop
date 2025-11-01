@@ -6,6 +6,7 @@ Y="\e[33m"] #Yellow
 N="\e[0m"  #No Color white
 LOGS_FLODER="/var/log/shell-roboshop"
 SCRIPT_NAME=$( echo $0 | cut -d "." -f1)
+SCRIPT_DIR=/home/ec2-user/shell-roboshop
 MONGODB_HOST=mongodb.zyna.space
 LOGS_FILE="$LOGS_FLODER/$SCRIPT_NAME.log"
 DIRECTORY_NAME="/app"
@@ -59,8 +60,7 @@ VALIDATE $? "unzip catalogue component"
 npm install  &>>$LOGS_FILE
 VALIDATE $? "install nodejs dependencies" 
 
-cd /path/to/catalogue
-cp catalogue.service /etc/systemd/system/catalogue.service 
+cp $SCRIPT_DIR/catalogue.service /etc/systemd/system/catalogue.service 
 VALIDATE $? "copying catalogue service file"
 
 systemctl daemon-reload &>>$LOGS_FILE
