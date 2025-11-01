@@ -10,6 +10,9 @@ SCRIPT_DIR=$PWD
 MONGODB_HOST=mongodb.zyna.space
 LOGS_FILE="$LOGS_FLODER/$SCRIPT_NAME.log"
 
+trap 'echo "There is an error in $LINENO, Command is: $BASH_COMMAND"' ERR
+
+
 mkdir -p "$LOGS_FLODER"
 echo "script started at : $(date)"  | tee -a $LOGS_FILE
 
@@ -30,13 +33,11 @@ VALIDATE(){                                        #Functions recevive input to 
 #####nodejs installation #####
 
 dnf module disable nodejs -y &>>$LOGS_FILE
-VALIDATE $? "disable nodejs "
 
 dnf module enable nodejs:20 -y &>>$LOGS_FILE
-VALIDATE $? "enable nodejs 20"
 
-dnf install nodejs -y  &>>$LOGS_FILE
-VALIDATE $? "installing nodejs "
+dnf install nodejsm -y  &>>$LOGS_FILE
+
 
 id roboshop &>>$LOGS_FILE
 if [ $? -ne 0 ]; then
@@ -48,38 +49,29 @@ fi
 
 
 mkdir -p /app  &>>$LOGS_FILE    #-p to avoid error if directory already exists
-VALIDATE $? "CREATE /app directory"  &>>$LOGS_FILE
 
 curl -o /tmp/catalogue.zip https://roboshop-artifacts.s3.amazonaws.com/catalogue-v3.zip &>>$LOGS_FILE
-VALIDATE $? "downloading catalogue component"
 
 cd /app
-VALIDATE $? "change directory to /app" &>>$LOGS_FILE 
 
 rm -rf *  &>>$LOGS_FILE  #RMOVE old content
-VALIDATE $? "cleaning old catalogue content"
 
 unzip /tmp/catalogue.zip &>>$LOGS_FILE
-VALIDATE $? "unzip catalogue component"
 
 npm install  &>>$LOGS_FILE
-VALIDATE $? "install nodejs dependencies" 
 
 cp $SCRIPT_DIR/catalogue.service /etc/systemd/system/catalogue.service 
-VALIDATE $? "copying catalogue service file"
 
 systemctl daemon-reload &>>$LOGS_FILE
-VALIDATE $? "daemon reload"
 
 systemctl enable catalogue &>>$LOGS_FILE
-VALIDATE $? "enable catalogue service"
+
 
 
 cp $SCRIPT_DIR/mongo.repo /etc/yum.repos.d/mongo.repo
-VALIDATE $? "COPY... mongo repo"
+
 
 dnf install mongodb-mongosh -y &>>$LOGS_FILE
-VALIDATE $? "INSTALLING MONGOSH CLIENT"
 
 INDEX=$(mongosh mongodb.daws86s.fun --quiet --eval "db.getMongo().getDBNames().indexOf('catalogue')")
 if [ $INDEX -le 0 ]; then
@@ -90,7 +82,6 @@ else
 fi
 
 systemctl restart catalogue &>>$LOGS_FILE
-VALIDATE $? "restart catalogue service"
 
 echo -e "script ended at : $(date)"  | tee -a $LOGS_FILE
 
