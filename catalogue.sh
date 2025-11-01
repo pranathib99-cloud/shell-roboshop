@@ -6,7 +6,7 @@ Y="\e[33m"] #Yellow
 N="\e[0m"  #No Color white
 LOGS_FLODER="/var/log/shell-roboshop"
 SCRIPT_NAME=$( echo $0 | cut -d "." -f1)
-SCRIPT_DIR=/home/ec2-user/shell-roboshop
+SCRIPT_DIR=$pwd
 MONGODB_HOST=mongodb.zyna.space
 LOGS_FILE="$LOGS_FLODER/$SCRIPT_NAME.log"
 
@@ -74,8 +74,8 @@ VALIDATE $? "daemon reload"
 systemctl enable catalogue &>>$LOGS_FILE
 VALIDATE $? "enable catalogue service"
 
-cp $SCRIPT_DIR/mongo.repo /etc/yum.repos.d/mongo.repo
-cp mongo.repo/etc/yum.repos.d/mongo.repo &>>$LOGS_FILE
+
+cp $SCRIPT_DIR/mongo.repo/etc/yum.repos.d/mongo.repo &>>$LOGS_FILE
 VALIDATE $? "COPY mongo repo"
 
 dnf install mongodb-mongosh -y &>>$LOGS_FILE
