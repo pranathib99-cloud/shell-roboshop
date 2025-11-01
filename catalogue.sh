@@ -56,6 +56,9 @@ VALIDATE $? "downloading catalogue component"
 cd /app
 VALIDATE $? "change directory to /app" &>>$LOGS_FILE 
 
+rm -rf *  &>>$LOGS_FILE  #RMOVE old content
+VALIDATE $? "cleaning old catalogue content"
+
 unzip /tmp/catalogue.zip &>>$LOGS_FILE
 VALIDATE $? "unzip catalogue component"
 
