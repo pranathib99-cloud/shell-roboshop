@@ -9,7 +9,6 @@ SCRIPT_NAME=$( echo $0 | cut -d "." -f1)
 SCRIPT_DIR=/home/ec2-user/shell-roboshop
 MONGODB_HOST=mongodb.zyna.space
 LOGS_FILE="$LOGS_FLODER/$SCRIPT_NAME.log"
-DIRECTORY_NAME="/app"
 
 mkdir -p "$LOGS_FLODER"
 echo "script started at : $(date)"  | tee -a $LOGS_FILE
@@ -39,13 +38,16 @@ VALIDATE $? "enable nodejs 20"
 dnf install nodejs -y  &>>$LOGS_FILE
 VALIDATE $? "installing nodejs "
 
-if [ -d "$DIRECTORY_NAME" ]; then
-  echo "Directory '$DIRECTORY_NAME' exists. Removing and recreating..."
-  rm -rf "$DIRECTORY_NAME"
+id robodhop &>>$LOGS_FILE
+if [ $? -ne 0 ]; then
+   useradd --system --home /app --shell /sbin/nologin --comment "roboshop system user" roboshop
+   VALIDATE $? "create roboshop user"
+else
+    echo "roboshop user already exists...$Y skipping $N"
 fi
 
-mkdir "$DIRECTORY_NAME"
-echo "Directory '$DIRECTORY_NAME' created."
+
+mkdir -p /app  &>>$LOGS_FILE    #-p to avoid error if directory already exists
 VALIDATE $? "CREATE /app directory"  &>>$LOGS_FILE
 
 curl -o /tmp/catalogue.zip https://roboshop-artifacts.s3.amazonaws.com/catalogue-v3.zip &>>$LOGS_FILE
