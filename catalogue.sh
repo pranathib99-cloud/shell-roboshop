@@ -80,3 +80,5 @@ VALIDATE $? "LOAD catalogue "
 
 systemctl restart catalogue &>>$LOGS_FILE
 VALIDATE $? "restart catalogue service"
+
+echo -e "script ended at : $(date)"  | tee -a $LOGS_FILE
