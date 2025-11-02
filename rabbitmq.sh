@@ -43,6 +43,13 @@ systemctl start rabbitmq-server
 VALIDATE $? "atarting rabbitmq service"
 
 rabbitmqctl add_user roboshop roboshop123
+if id "roboshop" &>/dev/null; then
+  echo "User roboshop already exists"
+else
+  echo "Adding user roboshop..."
+  useradd roboshop
+fi
+
 VALIDATE $? "adding user to rabbittmq"
 
 rabbitmqctl set_permissions -p / roboshop ".*" ".*" ".*"
