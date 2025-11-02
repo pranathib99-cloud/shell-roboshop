@@ -56,10 +56,10 @@ cp $SCRIPT_DIR/payment.service /etc/systemd/system/payment.service
 systemctl daemon-reload
 VALIDATE $? "daemon reload"
 
-systemctl enable/payment
+systemctl enable payment
 VALIDATE $? "enable/payment service"
 
-systemctl start/payment
+systemctl start payment
 VALIDATE $? "start/payment service"
 
 dnf install mysql -y 
@@ -67,5 +67,5 @@ VALIDATE $? "install mysql client"
 
 
 
-systemctl restart/payment
+systemctl restart payment
 VALIDATE $? "restart/payment service"
