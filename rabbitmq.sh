@@ -33,10 +33,10 @@ VALIDATE(){                                        #Functions recevive input to 
 cp $SCRIPT_DIR/rabbitmq.repo /etc/yum.repos.d/rabbitmq.repo
 VALIDATE $? "adding rabbitmq repo"
 
-dnf install rabbitmq-server -y systemctl 
+dnf install rabbitmq-server -y 
 VALIDATE $? "INstalling rabbitmq"
 
-enable rabbitmq-server
+systemctl enable rabbitmq-server
 VALIDATE $? "Enabling rabbitmq service"
 
 systemctl start rabbitmq-server
