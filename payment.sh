@@ -40,7 +40,7 @@ else
     echo -e "roboshop user already exists...$Y skipping $N"
 fi
 
-mkdir /app 
+mkdir -p /app 
 VALIDATE $? "creating /app directory"
 
 curl -L -o /tmp/payment.zip https://roboshop-artifacts.s3.amazonaws.com/payment-v3.zip 
