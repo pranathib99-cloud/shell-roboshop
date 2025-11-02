@@ -3,7 +3,7 @@ Description = Cart Service
 [Service]
 User=roboshop
 // highlight-start
-Environment=REDIS_HOST=redis.Zyna.space
+Environment=REDIS_HOST=redis.Zyna.space>
 Environment=CATALOGUE_HOST=catalogue.Zyna.space
 Environment=CATALOGUE_PORT=8080
 // highlight-end
