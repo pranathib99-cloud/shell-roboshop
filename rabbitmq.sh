@@ -28,6 +28,7 @@ VALIDATE(){                                        #Functions recevive input to 
     fi
 }
 
+
 ####rabbitmq installation #####
 
 cp $SCRIPT_DIR/rabbitmq.repo /etc/yum.repos.d/rabbitmq.repo
