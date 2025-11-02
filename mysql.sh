@@ -43,6 +43,6 @@ mysql_secure_installation --set-root-pass RoboShop@1
 VALIDATE $? " Setting mysql root password"
 
 END_TIME=$(date +%s)
-TOTAL_TIME=$(( $END_TIME -$START_TIME ))
+TOTAL_TIME=$(( $END_TIME $START_TIME ))
 
 echo -e " script executed in : $Y $TOTAL_TIME seconds $N"
