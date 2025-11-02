@@ -51,6 +51,6 @@ VALIDATE $? "setting permissions to roboshop user"
 
 ############end rabbitmq installation #####
 END_TIME=$(date +%s)
-TOTAL_TIME=$(( $END_TIME -$START_TIME ))
+TOTAL_TIME=$(( $END_TIME $START_TIME ))
 
 echo -e " script executed in : $Y $TOTAL_TIME seconds $N"
