@@ -45,8 +45,10 @@ VALIDATE $? "nginx installation"
 systemctl start nginx curl -o /tmp/frontend.zip https://roboshop-artifacts.s3.amazonaws.com/frontend-v3.zip &>>$LOGS_FILE
 
 cd /usr/share/nginx/html &>>$LOGS_FILE
-unzip /tmp/frontend.zip &>>$LOGS_FILE
-VALIDATE $? "frontend code download & unzip"    
+VALIDATE $? "nginx html directory change"   
+
+unzip /tmp/frontend.zip &>>$LOG_FILE
+VALIDATE $? "Downloading frontend"
 
 rm -rf /etc/nginx/nginx.conf  &>>$LOGS_FILE
 cp $SCRIPT_DIR/nginx.conf /etc/nginx/nginx.conf &>>$LOGS_FILE
