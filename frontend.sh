@@ -47,7 +47,7 @@ systemctl start nginx curl -o /tmp/frontend.zip https://roboshop-artifacts.s3.am
 cd /usr/share/nginx/html &>>$LOGS_FILE
 VALIDATE $? "nginx html directory change"   
 
-unzip /tmp/frontend.zip &>>$LOG_FILE
+unzip /tmp/frontend.zip       &>>$LOGS_FILE
 VALIDATE $? "Downloading frontend"
 
 rm -rf /etc/nginx/nginx.conf  &>>$LOGS_FILE
