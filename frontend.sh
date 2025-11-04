@@ -34,29 +34,29 @@ VALIDATE(){                                        #Functions recevive input to 
 
 
 
-dnf module disable nginx -y &>>$LOGS_FILE
-dnf module enable nginx:1.24 -y &>>$LOGS_FILE
+dnf module disable nginx -y
+dnf module enable nginx:1.24 -y
 VALIDATE $? "enabling nginx 1.24"
 
-dnf install nginx -y &>>$LOGS_FILE
-systemctl enable nginx  &>>$LOGS_FILE
+dnf install nginx -y
+systemctl enable nginx 
 VALIDATE $? "nginx installation"
 
 curl -o /tmp/frontend.zip https://roboshop-artifacts.s3.amazonaws.com/frontend-v3.zip &>>$LOG_FILE
 
-cd /usr/share/nginx/html &>>$LOGS_FILE
+cd /usr/share/nginx/html
 VALIDATE $? "nginx html directory change"   
 
-unzip /tmp/frontend.zip       &>>$LOGS_FILE
+unzip /tmp/frontend.zip      
 VALIDATE $? "Downloading frontend"
 
-rm -rf /etc/nginx/nginx.conf  &>>$LOGS_FILE
-cp $SCRIPT_DIR/nginx.conf /etc/nginx/nginx.conf &>>$LOGS_FILE
+rm -rf /etc/nginx/nginx.conf 
+cp $SCRIPT_DIR/nginx.conf /etc/nginx/nginx.conf
 VALIDATE $? "nginx configuration"
 
 
 
-systemctl restart nginx &>>$LOGS_FILE
+systemctl restart nginx
 VALIDATE $? "nginx restart"  #$? is exit status of last command
 
 
