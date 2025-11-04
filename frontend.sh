@@ -56,7 +56,7 @@ systemctl restart nginx &>>$LOGS_FILE
 
 VALIDATE $? "frontend setup completed"
 
-q
+
 
 
 
