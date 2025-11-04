@@ -36,21 +36,26 @@ VALIDATE(){                                        #Functions recevive input to 
 
 dnf module disable nginx -y &>>$LOGS_FILE
 dnf module enable nginx:1.24 -y &>>$LOGS_FILE
+VALIDATE $? "enabling nginx 1.24"
 
 dnf install nginx -y &>>$LOGS_FILE
 systemctl enable nginx  &>>$LOGS_FILE
+VALIDATE $? "nginx installation"
 
 systemctl start nginx curl -o /tmp/frontend.zip https://roboshop-artifacts.s3.amazonaws.com/frontend-v3.zip &>>$LOGS_FILE
 
 cd /usr/share/nginx/html &>>$LOGS_FILE
 unzip /tmp/frontend.zip&>>$LOGS_FILE
+VALIDATE $? "frontend code download & unzip"    
 
 rm -rf /etc/nginx/nginx.conf  &>>$LOGS_FILE
 cp $SCRIPT_DIR/nginx.conf /etc/nginx/nginx.conf &>>$LOGS_FILE
+VALIDATE $? "nginx configuration"
 
 
 
 systemctl restart nginx &>>$LOGS_FILE
+VALIDATE $? "nginx restart"  #$? is exit status of last command
 
 
 
