@@ -42,7 +42,7 @@ dnf install nginx -y
 systemctl enable nginx 
 VALIDATE $? "nginx installation"
 
-curl -o /tmp/frontend.zip https://roboshop-artifacts.s3.amazonaws.com/frontend-v3.zip &>>$LOG_FILE
+curl -o /tmp/frontend.zip https://roboshop-artifacts.s3.amazonaws.com/frontend-v3.zip 
 
 cd /usr/share/nginx/html
 VALIDATE $? "nginx html directory change"   
